@@ -1,0 +1,165 @@
+openapi: '3.0.2'
+info:
+  title: Wildzone product API
+  version: '1.0'
+servers:
+  - url: localhost:3001/api/v1
+paths:
+  /products/{:id}:
+    get:
+      summary: Get Product
+      description: Get a Product by supplied ID in the URL.
+      parameters:
+      - in: path
+        name: id
+        schema: 
+          $ref: '#/components/schemas/UrlIDParameter'
+        required: true
+        description: Numeric ID of the Product to get.
+      
+      responses:
+        '200':
+          description: Successfull GET response
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError'
+    
+    post:
+      summary: Update Product
+      
+
+  /products:
+    post:
+      summary: Create a Product
+
+
+components:
+  schemas:
+    UrlIDParameter:   
+      type: integer
+      example: 1
+      minimum: 1
+    Products: 
+      description: Array of Product objects
+      type: array
+      items: 
+        $ref: '#/components/schemas/Product'
+
+    Product: 
+      description: Object containing Product information
+      title: Product
+      required:
+        - id
+        - supplierID
+        - name
+        - description
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+          minimum: 0
+
+        supplierID:
+          type: integer
+          example: 1
+          minimum: 0
+
+        name: 
+          type: string
+          example: pants
+        
+        description:
+          type: string
+          example: pants are awesome 
+
+        product_information:
+          $ref: '#/components/schemas/ProductSpecs'
+
+
+    ProductSpecsList:
+      description: Array of ProductSpecs objects
+      type: array
+      items: 
+        $ref: '#/components/schemas/ProductSpecs'
+
+    ProductSpecs:
+      description: Object containing ProductSpecs
+      title: ProductSpecs
+      required:
+        - id
+        - MSRP
+        - specID
+        - productID
+
+      properties:
+        id:
+          type: integer
+          readOnly: true
+          example: 1
+          minimum: 0
+
+        specID: 
+          type: integer
+          example: 1
+          minimum: 0
+
+        productID:
+          type: integer
+          example: 1
+          minimum: 0
+
+        size:
+          type: string
+          example: L
+          nullable: true
+        
+        weight:
+          type: integer
+          example: 400
+          nullable: true
+
+        color:
+          type: string
+          example: blue
+          nullable: true
+
+        MSRP:
+          type: number
+          example: 20.99
+
+  responses:
+    NotFound:
+      description: The resource was not found with the given ID.
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:   
+              message:
+                type: string
+      
+    ServerError:
+      description: The server encountered an error.
+      content: 
+        application/json:
+          schema:
+            type: object
+            properties:   
+              message:
+                type: string
+
+    InvalidRequest:
+      description: The request is not valid.
+      content: 
+        application/json:
+          schema:
+            type: object
+            properties:   
+              message:
+                type: string
