@@ -3,7 +3,7 @@ info:
   title: Wildzone product API
   version: '1.0'
 servers:
-  - url: localhost:3001/api/v1
+  - url: localhost:3003/api/v1
 paths:
   /products/{:id}:
     get:
@@ -31,12 +31,84 @@ paths:
     
     post:
       summary: Update Product
+      description: Deactivate the current product and create a new product with the updated information.
+      parameters:
+      - in: path
+        name: id
+        schema: 
+          $ref: '#/components/schemas/UrlIDParameter'
+        required: true
+        description: Numeric ID of the Product to get.
       
+      responses:
+        '201':
+          description: Successfull POST response
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/Product'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '5XX':
+          $ref: '#/components/responses/ServerError'
+    
+    patch:
+      summary: Archive product
+      description: Archives a product, so it no longer shows up on the webshop.
+
+      responses:
+        '200':
+          description: Successfull PATCH response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+
+        '5XX':
+          $ref: '#/components/responses/ServerError'
 
   /products:
+    get:
+      summary: Get all products
+      description: Get all the products in a list.
+      responses:
+        '200':
+          description: Successfull GET response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Products'
+        '5XX':
+          $ref: '#/components/responses/ServerError'
+
     post:
       summary: Create a Product
+      description: Creates a new product with the parameters specified in the request body.
+      requestBody:
+        description: This is the Product object.
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: '#/components/schemas/Product'
 
+      responses:
+        '201':
+          description: Successfull POST response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        
+        '400':
+          $ref: '#/components/responses/InvalidRequest'
+
+        '5XX':
+          $ref: '#/components/responses/ServerError'
 
 components:
   schemas:
