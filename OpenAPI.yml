@@ -153,6 +153,14 @@ components:
         product_information:
           $ref: '#/components/schemas/ProductSpecs'
 
+        createdAt:
+          type: string
+          example: 2021-11-17T13:13:56.000Z
+
+        updatedAt:
+          type: string
+          example: 2021-11-17T13:13:56.000Z
+
 
     ProductSpecsList:
       description: Array of ProductSpecs objects
@@ -173,11 +181,6 @@ components:
         id:
           type: integer
           readOnly: true
-          example: 1
-          minimum: 0
-
-        specID: 
-          type: integer
           example: 1
           minimum: 0
 
@@ -204,6 +207,14 @@ components:
         MSRP:
           type: number
           example: 20.99
+
+        createdAt:
+          type: string
+          example: 2021-11-17T13:13:56.000Z
+
+        updatedAt:
+          type: string
+          example: 2021-11-17T13:13:56.000Z
 
   responses:
     NotFound:
