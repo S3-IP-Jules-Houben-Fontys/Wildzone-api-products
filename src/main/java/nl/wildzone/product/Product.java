@@ -23,7 +23,7 @@ public class Product {
     private List<ProductSpec> productSpecs;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
+    private LocalDateTime archivedAt;
     
     public Product(
                 Integer productID,
@@ -39,6 +39,7 @@ public class Product {
         this.productSpecs = productSpecs;
         createdAt = LocalDateTime.now();
         updatedAt = LocalDateTime.now();
+        archivedAt = null;
     }
 
 }

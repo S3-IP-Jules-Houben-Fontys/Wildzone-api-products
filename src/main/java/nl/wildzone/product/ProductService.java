@@ -1,9 +1,13 @@
 package nl.wildzone.product;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
@@ -13,10 +17,16 @@ import lombok.AllArgsConstructor;
 public class ProductService {
 
     private final ProductRepository productRepository;
+    private MongoTemplate mongoTemplate;
 
-    public Optional<Product> getProduct(Integer productID) {
-        //return productRepository.findByProductId(productID);
-        return null;
+    public Product getProduct(Integer productID) {       
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("productID").is(productID).and("archivedAt").is(null).not());
+
+        Product product = mongoTemplate.findOne(query, Product.class);
+
+        return product;
     }
 
     public List<Product> getAllProducts() {
@@ -31,11 +41,6 @@ public class ProductService {
         }
 
         List<Product> latestProduct = productRepository.findAll(Sort.by(Sort.Direction.DESC, "productID")); 
-        //System.out.println(latestProduct);
-        //System.out.println(latestProduct.get(0));
-        //System.out.println("ProductID: "+ latestProduct.get(0).getProductID());
-        //latestProduct.get(0).setProductID(1);
-        //System.out.println("ProductID: "+ latestProduct.get(0).getProductID());
         if(latestProduct.get(0).getProductID() != null) {
             newProduct.setProductID(latestProduct.get(0).getProductID()+1); 
         }else{
@@ -58,4 +63,15 @@ public class ProductService {
         
     }
 
+    public Product archiveProduct(Integer productID) {
+
+        Query query = new Query();
+        query.addCriteria(Criteria.where("productID").is(productID).and("archivedAt").is(null));
+
+        Product patch = mongoTemplate.findOne(query, Product.class);
+
+        patch.setArchivedAt(LocalDateTime.now());
+
+        return productRepository.save(patch);
+    }
 }

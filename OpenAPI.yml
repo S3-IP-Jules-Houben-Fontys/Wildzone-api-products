@@ -166,6 +166,11 @@ components:
           type: string
           example: 2021-11-17T13:13:56.000Z
 
+        archivedAt:
+          type: string
+          example: 2021-11-17T13:13:56.000Z
+          nullable: true
+
 
     ProductSpecsList:
       description: Array of ProductSpecs objects
