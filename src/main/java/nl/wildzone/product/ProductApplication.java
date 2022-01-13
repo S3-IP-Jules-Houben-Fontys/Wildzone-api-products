@@ -21,7 +21,7 @@ public class ProductApplication {
 			ProductSpec productSpec = new ProductSpec("L", 500, "blue", 20.00);
 			List<ProductSpec> productSpecs = new ArrayList<ProductSpec>();
 			productSpecs.add(productSpec);
-			Product product = new Product(1, "shirt", "nice shirt", productSpecs);
+			Product product = new Product(1, 1, "shirt", "nice shirt", productSpecs);
 
 			repository.insert(product);
 		};

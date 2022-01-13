@@ -1,15 +1,13 @@
 package nl.wildzone.product;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
-
-import org.springframework.data.annotation.Id;
 
 import lombok.Data;
 
 @Data
-public class ProductSpec {
-    @Id
-    private String id;
+public class ProductSpec implements Serializable {
+    private Integer id;
     private String size;
     private Integer weight;
     private String color;
