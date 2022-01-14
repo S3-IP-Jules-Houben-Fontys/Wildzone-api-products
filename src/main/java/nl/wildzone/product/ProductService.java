@@ -3,7 +3,6 @@ package nl.wildzone.product;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
