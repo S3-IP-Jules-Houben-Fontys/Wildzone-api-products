@@ -64,10 +64,23 @@ jobs:
   upload-docker-image:
     needs: [ sonarcloud, build-app ]
     runs-on: ubuntu-latest
+    env: 
+       MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_INITDB_ROOT_USERNAME }}
+       MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
     steps:
 
         - name: Check Out Repo 
           uses: actions/checkout@v2
+          
+        - run: docker-compose up -d mongodb  
+        - name: Set up JDK 15
+          uses: actions/setup-java@v2
+          with:
+            java-version: 15
+            distribution: 'adopt'
+            cache: maven
+        - name: Build with Maven
+          run: mvn -B package --file pom.xml  
 
         - name: Login to Docker Hub
           uses: docker/login-action@v1
