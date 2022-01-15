@@ -39,9 +39,24 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=S3-IP-Jules-Houben-Fontys_Wildzone-api-products
 
+  build-app:
+    name: Build the java application
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 15
+      uses: actions/setup-java@v2
+      with:
+        java-version: 15
+        distribution: 'adopt'
+        cache: maven
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+
 # Upload docker-image after all tests are done
   upload-docker-image:
-    needs: sonarcloud
+    needs: [ sonarcloud, build-app ]
     runs-on: ubuntu-latest
     steps:
 
