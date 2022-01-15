@@ -99,7 +99,7 @@ jobs:
             context: ./
             file: ./Dockerfile
             push: true
-            tags: jjuless/wildzone-api-product:latest
+            tags: jjuless/wildzone-api-products:latest
 
         - name: Image digest
           run: echo ${{ steps.docker_build.outputs.digest }}
