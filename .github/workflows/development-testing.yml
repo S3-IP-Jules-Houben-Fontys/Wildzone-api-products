@@ -18,7 +18,7 @@ jobs:
        MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_INITDB_ROOT_PASSWORD }}
     steps:  
       - uses: actions/checkout@v2
-      - run: docker-compose up -d Wildzone-products-database
+      - run: docker-compose up -d mongodb
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
