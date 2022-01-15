@@ -14,6 +14,7 @@ public class ProductApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ProductApplication.class, args);
 	}
+	/*
 	@Bean
 	CommandLineRunner runner(ProductRepository repository) {
 		return args -> {
@@ -25,4 +26,5 @@ public class ProductApplication {
 			repository.insert(product);
 		};
 	};
+	*/
 }
