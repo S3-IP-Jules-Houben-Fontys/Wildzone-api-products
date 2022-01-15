@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  Wildzone-database-products:
+  mongodb:
     image: mongo
     container_name: Wildzone-database-products
     ports: 
